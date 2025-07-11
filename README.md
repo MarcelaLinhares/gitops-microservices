@@ -60,6 +60,40 @@ Esse conteúdo foi copiado e salvo localmente como `online-boutique.yaml`, dentr
 
 ## ➤ Etapa 2 – Instalação do ArgoCD no cluster local
 
+Com o cluster Kubernetes já em funcionamento pelo Rancher Desktop, o ArgoCD será instalado diretamente no cluster local por meio dos comandos abaixo.
+
+### 1. Criar o namespace `argocd`
+
+```bash
+kubectl create namespace argocd
+```
+
+![Criação do namespace argocd](./img/01-etapa2-argocd.png)
+
+> Este comando cria um novo namespace exclusivo onde todos os recursos do ArgoCD serão agrupados.
+
+### 2. Aplicar o manifesto oficial de instalação do ArgoCD
+
+```bash
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+![Aplicação do manifesto oficial de instalação do ArgoCD](./img/02-etapa2-argocd.png)
+
+> Este comando baixa e aplica o manifesto oficial do ArgoCD, criando os pods, services, deployments e outras configurações necessárias no namespace `argocd`.
+
+### 3. Verificar os pods do ArgoCD em execução
+
+Após a instalação, é possível verificar se os pods foram criados corretamente com o comando abaixo:
+
+```bash
+kubectl get pods -n argocd
+```
+
+![Pods do ArgoCD em execução](./img/03-etapa2-argocd-pods.png)
+
+> 🔄 Os pods podem levar alguns segundos ou minutos até que todos fiquem com o status `Running`. Aguarde até que estejam todos prontos antes de seguir para a próxima etapa.
+
 ---
 
 ## ➤ Etapa 3 – Acessar o ArgoCD localmente
@@ -78,7 +112,7 @@ Esse conteúdo foi copiado e salvo localmente como `online-boutique.yaml`, dentr
 
 ---
 
-# 👩‍💻 Desenvolvido por:
+## 👩‍💻 Desenvolvido por:
 
 <table>
   <tr>
