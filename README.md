@@ -98,6 +98,48 @@ kubectl get pods -n argocd
 
 ## ➤ Etapa 3 – Acessar o ArgoCD localmente
 
+Com o ArgoCD instalado e em execução, é possível acessar sua interface Web localmente utilizando o comando `port-forward`.
+
+### 1. Redirecionar a porta do ArgoCD Server para acesso local
+
+Execute o comando abaixo para expor o ArgoCD Server na porta `8080` da sua máquina:
+
+```bash
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+![Comando port-forward para expor o ArgoCD Server na porta 8080](./img/04-etapa3-port-forward.png)
+
+> Este comando redireciona a porta 443 do serviço `argocd-server` para a porta 8080 da sua máquina local, permitindo o acesso ao painel web via navegador.
+
+### 2. Acessar o painel Web do ArgoCD
+
+Abra o navegador e acesse:
+
+```arduino
+https://localhost:8080
+```
+
+![Acesso ao painel Web do ArgoCD](./img/05-etapa3-painel-web.png)
+
+> Como o ArgoCD utiliza HTTPS por padrão, pode ser necessário aceitar o risco de segurança no navegador ao acessar `localhost`.
+
+### 3. Obter as credenciais de acesso
+
+- Usuário: `admin`
+
+- Senha: execute o comando abaixo para obtê-la:
+
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+```
+
+![Terminal com o comando e resultado da senha inicial](./img/06-etapa3-senha.png)
+
+> A senha será exibida no terminal. Use-a para fazer login no painel.
+
+![Login no painel do ArgoCD](./img/07-etapa3-login-painel.png)
+
 ---
 
 ## ➤ Etapa 4 – Criar o App no ArgoCD
