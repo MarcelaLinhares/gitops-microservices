@@ -207,9 +207,11 @@ Com o port-forward ativo, abra o navegador e acesse:
 http://localhost:8081
 ```
 
+![Página inicial da aplicação Online Boutique carregada com sucesso](./img/13-etapa5-frontend.png)
+
 > 💡 Caso esteja utilizando o WSL2, o navegador no Windows também poderá acessar o endereço normalmente.
 
-> ✅ Se o pod frontend estiver com STATUS = Running, a aplicação será carregada corretamente. 
+> ⚠️ Embora o pod `frontend` esteja com STATUS = `Running`, é necessário que os principais microsserviços também estejam em funcionamento, como o `cartservice`, para que a aplicação carregue corretamente no navegador.
 
 ---
 
