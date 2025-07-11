@@ -185,6 +185,32 @@ Se tudo estiver correto, os microserviços da Online Boutique começarão a ser 
 
 ## ➤ Etapa 5 – Acessar o frontend da aplicação
 
+Com os pods em execução e o aplicativo `online-boutique` sincronizado, o próximo passo é acessar o frontend da aplicação.
+
+### 1. Redirecionar a porta do serviço `frontend-external`
+
+Execute o comando abaixo em um terminal para fazer o redirecionamento de portas com `port-forward`, e expor a aplicação frontend na porta `8081` da sua máquina local::
+
+```bash
+kubectl port-forward svc/frontend-external 8081:80 -n online-boutique
+```
+
+![Comando port-forward para expor o Frontend do App online-boutique na porta 8081](./img/12-etapa5-port-forward.png)
+
+> Este comando redireciona a porta `80` do serviço `frontend-external` no cluster para a porta `8081` da sua máquina local, permitindo o acesso via navegador.
+
+### 2. Acessar a aplicação no navegador
+
+Com o port-forward ativo, abra o navegador e acesse:
+
+```arduino
+http://localhost:8081
+```
+
+> 💡 Caso esteja utilizando o WSL2, o navegador no Windows também poderá acessar o endereço normalmente.
+
+> ✅ Se o pod frontend estiver com STATUS = Running, a aplicação será carregada corretamente. 
+
 ---
 
 ## ➤ Etapa Extra – Customização do Manifest
