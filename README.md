@@ -217,6 +217,59 @@ http://localhost:8081
 
 ## ➤ Etapa Extra – Customização do Manifest
 
+Para reforçar a compreensão do fluxo GitOps com o ArgoCD, foi realizada uma personalização no manifesto da aplicação. A proposta foi alterar diretamente no repositório GitHub o número de réplicas do microserviço `frontend` e acompanhar como essa modificação seria aplicada automaticamente no cluster Kubernetes.
+
+### 1. Editar o manifesto YAML
+No diretório `k8s`, abra o arquivo `online-boutique.yaml` e localize o trecho referente ao deployment do serviço `frontend`.
+
+Altere o valor da chave `replicas` de `1` para `3`:
+
+Altere a linha `262`:
+
+```yaml
+replicas: 1
+```
+
+![Número de réplicas do serviço frontend antes da alteração](./img/14-etapaextra-yaml.png)
+
+Para:
+
+```yaml
+replicas: 3
+```
+
+![Número de réplicas do serviço frontend depois da alteração](./img/15-etapaextra-yaml.png)
+
+> 💡 Essa informação geralmente aparece na linha `262`, dependendo se o arquivo não foi modificado.
+
+Salve o arquivo e envie a alteração ao GitHub com o comando:
+
+```bash
+git add .
+git commit -m "Etapa Extra – Customização: número de réplicas do frontend alterado para 3"
+git push origin main
+```
+
+### 2. Aguardar sincronização automática no ArgoCD
+
+Com a `sincronização automática ativada`, o ArgoCD detectará a alteração feita no GitHub e aplicará a nova configuração no cluster, sem necessidade de ações manuais.
+
+![Interface do ArgoCD após atualização e o status Synced](./img/16-etapaextra-argocd.png)
+
+### 3. Confirmar no terminal a criação das réplicas
+
+Para verificar se as três instâncias do `frontend` foram criadas com sucesso, utilize:
+
+```bash
+kubectl get pods -n online-boutique
+```
+
+Busque pelas linhas referentes ao `frontend`, que agora devem exibir três pods, todos com status `Running`.
+
+![Terminal com os três pods frontend rodando normalmente](./img/17-etapaextra-replicas.png)
+
+> ✅ Essa etapa comprova que qualquer mudança aplicada nos manifests versionados no GitHub é automaticamente refletida no cluster local, validando na prática o fluxo GitOps com o ArgoCD.
+
 ---
 
 ## 👩‍💻 Desenvolvido por:
