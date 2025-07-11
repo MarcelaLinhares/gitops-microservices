@@ -144,6 +144,43 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 ## ➤ Etapa 4 – Criar o App no ArgoCD
 
+Com acesso ao painel do ArgoCD, será criado um novo aplicativo que permitirá que o ArgoCD gerencie e sincronize os manifestos da aplicação Online Boutique com o cluster Kubernetes local.
+
+
+### 1. Criar um novo App
+
+Na interface do ArgoCD:
+
+1. Clique em **"Applications"** no menu lateral
+2. Em seguida, clique em **"+ NEW APP"** no canto superior direito
+
+Preencha os campos do formulário da seguinte forma:
+
+| Campo                 | Valor                                                                 |
+|-----------------------|------------------------------------------------------------------------|
+| **Application Name**  | `online-boutique`                                                      |
+| **Project**           | `default`                                                              |
+| **Sync Policy**       | Selecione **Automatic**                                                |
+|                       | Marque as opções: `Prune Resources`, `Self Heal`, `Set Deletion Finalizer`, `Auto-Create Namespace` |
+| **Repository URL**    | `https://github.com/MarcelaLinhares/gitops-microservices` *(ou o seu)* |
+| **Revision**          | `main`                                                                 |
+| **Path**              | `k8s` *(sem ./ ou caminho completo)*                                   |
+| **Cluster URL**       | Clique em `NAME` e selecione: `in-cluster`                             |
+| **Namespace**         | `online-boutique` *(novo namespace que será criado automaticamente)*   |
+
+> Clique em **"Create"** para finalizar a criação do aplicativo.
+
+![Formulário preenchido na criação do App no ArgoCD](./img/08-etapa4-criar-app.png)
+![Formulário preenchido na criação do App no ArgoCD](./img/09-etapa4-criar-app.png)
+
+### 2. Confirmar criação do App
+
+O ArgoCD tentará sincronizar os manifests presentes no diretório `k8s/` do seu repositório público com o cluster local.  
+Se tudo estiver correto, os microserviços da Online Boutique começarão a ser criados automaticamente.
+
+![Aplicativo criado no painel ArgoCD](./img/10-etapa4-app-criado.png)
+![Tela de sincronização do ArgoCD](./img/11-etapa4-sincronizacao-app.png)
+
 ---
 
 ## ➤ Etapa 5 – Acessar o frontend da aplicação
