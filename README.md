@@ -256,17 +256,26 @@ Com a `sincronização automática ativada`, o ArgoCD detectará a alteração f
 
 ![Interface do ArgoCD após atualização e o status Synced](./img/16-etapaextra-argocd.png)
 
+> ✅ Como evidenciado na imagem acima, o `Deployment` do `frontend` está apontando para um `ReplicaSet` (`RS`) com 3 pods em execução. 
+
+> ✅ Todos os pods foram criados com sucesso e estão com status `Running` e `Healthy` (coração verde), validando o funcionamento da sincronização automática do ArgoCD. 
+
+> ✅ O estado da aplicação também está como `Synced`, e o `Last Sync` indica que a sincronização foi aplicada corretamente a partir do repositório GitHub.
+
+
 ### 3. Confirmar no terminal a criação das réplicas
 
 Para verificar se as três instâncias do `frontend` foram criadas com sucesso, utilize:
 
 ```bash
-kubectl get pods -n online-boutique
+kubectl get pods -n online-boutique -l app=frontend
 ```
 
-Busque pelas linhas referentes ao `frontend`, que agora devem exibir três pods, todos com status `Running`.
+> Esse `-l app=frontend` faz um filtro (label selector) e só mostra o pod (ou os pods) do `frontend`.
 
-![Terminal com os três pods frontend rodando normalmente](./img/17-etapaextra-replicas.png)
+> Os pods do `frontend`, que agora devem exibir três pods, todos devem estar com status `Running`.
+
+![Terminal com os três pods frontend rodando normalmente](./img/17-etapaextra-replicas-frontend.png)
 
 > ✅ Essa etapa comprova que qualquer mudança aplicada nos manifests versionados no GitHub é automaticamente refletida no cluster local, validando na prática o fluxo GitOps com o ArgoCD.
 
